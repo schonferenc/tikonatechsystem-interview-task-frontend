@@ -1,0 +1,53 @@
+<div class="home" *ngIf="user">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1 class="page-title">Topics</h1>
+    <p>{{ user.name }} ({{ userService.getRoleNameById(user.role) }})</p>
+  </div>
+
+  <!-- List Of Topics -->
+  <ng-container *ngIf="topics.length">
+    <app-topic
+      *ngFor="let topic of topics"
+      [topic]="topic"
+      [user]="user"
+      (topicRemoved)="fetchTopics()"
+    ></app-topic>
+  </ng-container>
+  <ng-container *ngIf="!topics.length">
+    There are no topics to display
+  </ng-container>
+
+  <!-- Add Topic Form -->
+  <form
+    class="add-topic-form"
+    *ngIf="this.userService.hasPermission('addDeleteTopics')"
+  >
+    <h2 class="form-title">Add New Topic</h2>
+
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input type="text" matInput [(ngModel)]="topic.title" name="title" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Body</mat-label>
+      <input type="text" matInput [(ngModel)]="topic.body" name="title" />
+    </mat-form-field>
+
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="topicformIsInvalid()"
+      (click)="addTopic()"
+    >
+      <mat-icon>add</mat-icon>
+      Add New Topic
+    </button>
+  </form>
+</div>
+
+<!-- If no user selected -->
+<ng-container *ngIf="!user">
+  <strong>No user selected! Choose a user on the profile page!</strong>
+</ng-container>

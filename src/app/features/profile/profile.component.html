@@ -1,0 +1,123 @@
+<div class="profile">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1 class="page-title">Profile</h1>
+  </div>
+
+  <!-- Select User -->
+  <div class="app-row">
+    <div style="min-width: 300px" class="app-col">
+      <h6>Select a user</h6>
+      <mat-form-field>
+        <mat-label>User</mat-label>
+        <mat-select [(ngModel)]="user" (selectionChange)="onUserSelected()">
+          <mat-option *ngFor="let user of users" [value]="user">{{
+            user.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="app-row">
+    <!-- User Form -->
+    <form
+      class="user-form"
+      [formGroup]="userForm"
+      (ngSubmit)="onSubmit(formDirective)"
+      #formDirective="ngForm"
+    >
+      <h6>Edit user</h6>
+
+      <!-- Name -->
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error *ngIf="validateField('name')">
+          {{ getErrorMessage("name") }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Email -->
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        <mat-error *ngIf="validateField('email')">
+          {{ getErrorMessage("email") }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <mat-error *ngIf="validateField('password')">
+          {{ getErrorMessage("password") }}
+        </mat-error>
+        <mat-hint> e.g.: [aA1xxxxx] </mat-hint>
+      </mat-form-field>
+
+      <!-- Confirm Password -->
+      <mat-form-field>
+        <mat-label>Confirm Password</mat-label>
+        <input matInput type="password" formControlName="confirmPassword" />
+        <mat-error *ngIf="validateField('confirmPassword')">
+          {{ getErrorMessage("confirmPassword") }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Submit Button -->
+      <button
+        [disabled]="!userExist()"
+        mat-flat-button
+        color="primary"
+        type="submit"
+      >
+        Save
+      </button>
+
+      <!-- Notification -->
+      <div
+        class="notification"
+        [ngClass]="{
+          error: isErrorNotification,
+          success: !isErrorNotification
+        }"
+      >
+        {{ notificationMessage }}
+      </div>
+    </form>
+
+    <div class="app-col">
+      <!-- User Role And Rights -->
+      <div class="container">
+        <strong>Role and Rights</strong>
+        <div>
+          <div>Role: {{ userRole.name }}</div>
+          <div>
+            <div>Rights:</div>
+            <ul>
+              <li
+                *ngFor="let priv of getPrivileges()"
+                [ngStyle]="{ color: getPrivilegeColor(priv.privilege) }"
+              >
+                {{ priv.description }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Topics And Comments -->
+      <div class="container">
+        <strong>User-written comments and topics</strong>
+        <div>
+          <div>Number of topics: {{ userTopicsCount }}</div>
+          <div>Number of comments: {{ userCommentsCount }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

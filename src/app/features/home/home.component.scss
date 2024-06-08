@@ -1,0 +1,26 @@
+/* Page header styles */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    .page-title {
+        font-size: 32px;
+        font-weight: bold;
+    }
+}
+
+/* Add topic form styles */
+.add-topic-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin-inline: auto;
+    margin-top: 40px;
+
+    .form-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+}

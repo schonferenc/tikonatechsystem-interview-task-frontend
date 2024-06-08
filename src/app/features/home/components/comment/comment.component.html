@@ -1,0 +1,73 @@
+<div class="app-comment" *ngFor="let comment of comments; index as i">
+  <div class="inner">
+    <!-- The content of the comment  -->
+    <div class="content" [ngClass]="{ removed: comment.removed }">
+      <span class="author">
+        {{ comment.author.name }}
+      </span>
+
+      <span class="message" *ngIf="!comment.removed">
+        {{ comment.body }}
+      </span>
+      <span *ngIf="comment.removed"> This comment has been removed. </span>
+    </div>
+
+    <!-- Comment actions -->
+    <div *ngIf="!comment.removed" class="actions">
+      <button
+        *ngIf="this.userService.hasPermission('addDeleteComments')"
+        mat-button
+        (click)="toggleAnswerField(i)"
+      >
+        Answer
+      </button>
+
+      <button
+        *ngIf="
+          (userService.hasPermission('addDeleteComments') &&
+            user &&
+            user.id === comment.author.id) ||
+          userService.isAdmin()
+        "
+        mat-button
+        (click)="deleteComment(comment.id)"
+      >
+        Remove
+      </button>
+
+      <button
+        *ngIf="comment.comments.length > 0"
+        mat-button
+        (click)="toggleComment()"
+      >
+        Comments ({{ visibleCommentCount(comment) }})
+      </button>
+    </div>
+
+    <!-- Answer Field -->
+    <div *ngIf="isAnswerFieldOpen[i]" class="answer-form">
+      <mat-form-field>
+        <mat-label>Write a comment</mat-label>
+        <textarea matInput [(ngModel)]="reply"></textarea>
+      </mat-form-field>
+
+      <button
+        [disabled]="reply.trim().length === 0"
+        (click)="addComment(comment)"
+        mat-icon-button
+      >
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Recursive -->
+  <div *ngIf="isCommentOpen && comment.comments.length">
+    <app-comment
+      [user]="user"
+      [comments]="comment.comments"
+      [topicId]="topicId"
+      (commentChanged)="commentChanged.emit()"
+    ></app-comment>
+  </div>
+</div>

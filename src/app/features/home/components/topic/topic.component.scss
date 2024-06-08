@@ -1,0 +1,53 @@
+/* Mat expansion panel component */
+.mat-expansion-panel {
+    box-shadow: none !important;
+    border-radius: 0px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+    /* Header Styles */
+    .mat-expansion-panel-header {
+        padding: 16px 24px;
+
+        /* Title */
+        .mat-expansion-panel-header-title {
+            max-width: 150px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+
+            .title {
+                color: rgb(0, 92, 187);
+            }
+
+            .author {
+                font-size: 12px;
+                font-weight: normal;
+            }
+        }
+
+        /* Description */
+        .mat-panel-description {
+            font-size: 14px;
+        }
+
+        /* Spacer */
+        .spacer {
+            flex: 1 1 auto;
+        }
+
+        /* Number of comments */
+        .number-of-comments {
+            font-size: 12px;
+            opacity: 0.5;
+        }
+    }
+
+    /* Empty content */
+    .empty-comment {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        color: rgb(149, 149, 149);
+        font-size: 14px;
+    }
+}

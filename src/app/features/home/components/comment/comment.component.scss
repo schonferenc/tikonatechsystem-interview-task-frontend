@@ -1,0 +1,53 @@
+/* AppComment component */
+.app-comment {
+    padding: 8px;
+    padding-inline: 40px;
+
+    .inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: max-content;
+        gap: 8px;
+
+        /* AppComment component */
+        .content {
+            display: flex;
+            flex-direction: column;
+            background: rgb(219, 218, 218);
+            padding: 8px 16px;
+            border-radius: 16px;
+            &.removed {
+                opacity: 0.5;
+            }
+
+            .author {
+                font-size: 12px;
+                font-weight: bold;
+            }
+        }
+
+        /* Comment actions */
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            .mdc-button {
+                height: 20px;
+                margin-bottom: 16px;
+                font-size: 14px;
+            }
+        }
+    }
+
+    /* Answer form */
+    .answer-form {
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+
+        .mat-mdc-icon-button {
+            margin-bottom: 20px;
+        }
+    }
+}

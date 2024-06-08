@@ -1,0 +1,64 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <!-- Title And Author-->
+      <mat-panel-title>
+        <strong class="title">
+          {{ topic.title }}
+        </strong>
+        <span class="author">{{ topic.author.name }}</span>
+      </mat-panel-title>
+
+      <!-- Description -->
+      <mat-panel-description>
+        {{ topic.body }}
+        <span class="spacer"></span>
+        <span class="number-of-comments">{{ numberOfComments }} comment</span>
+        <button
+          *ngIf="
+            this.userService.hasPermission('addDeleteTopics') ||
+            this.userService.isAdmin()
+          "
+          (click)="removeTopicById(topic.id, $event)"
+          mat-icon-button
+        >
+          <mat-icon>remove</mat-icon>
+        </button>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <!-- Add Comment Form -->
+    <div
+      class="add-comment-form"
+      *ngIf="this.userService.hasPermission('addDeleteComments')"
+    >
+      <mat-form-field>
+        <mat-label>Write a comment</mat-label>
+        <textarea matInput [(ngModel)]="comment"></textarea>
+      </mat-form-field>
+      <button
+        [disabled]="comment.trim().length === 0"
+        (click)="addComment()"
+        mat-icon-button
+      >
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+
+    <!-- Comments -->
+    <div class="comments">
+      <app-comment
+        *ngIf="topic.comments.length"
+        [user]="user"
+        [comments]="topic.comments"
+        [topicId]="topic.id"
+        (commentChanged)="updateNumberOfComments()"
+      ></app-comment>
+
+      <!-- Empty content -->
+      <span class="empty-comment" *ngIf="!topic.comments.length"
+        >There are no comments...</span
+      >
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
